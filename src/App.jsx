@@ -24,6 +24,13 @@ function App() {
 
 
   }
+  function Checkbox(id) {
+  settodoslist(prev =>
+    prev.map(item =>
+      item.id === id ? { ...item, isCompleted: !item.isCompleted } : item
+    )
+  )
+}
   useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true
@@ -42,8 +49,10 @@ function App() {
 
 
   useEffect(() => {
+    
     try {
       const raw = localStorage.getItem('todoslist')
+
       if (!raw) return
       const parsed = JSON.parse(raw)
       if (Array.isArray(parsed)) {
@@ -58,15 +67,7 @@ function App() {
   function handleChange(e) {
     setInputTask(e.target.value)
   }
-  function Checkbox(id, e) {
-    settodoslist(
-      todoslist.map(item =>
-        item.id === id ? { ...item, isCompleted: !item.isCompleted } : item
-      )
-    );
-
-
-  }
+  
   useEffect(() => {
     function handleDocumentClick(e) {
       if (!addNew1.current) return
@@ -79,6 +80,12 @@ function App() {
     return () => document.removeEventListener('mousedown', handleDocumentClick)
   }, [])
   function Newitem() {
+    const a = document.querySelectorAll(".Edit")
+    const b = document.querySelector(".closeedit")
+    for (let i = 0; i < a.length; i++) {
+      const e = a[i];
+      e.style.display = "none"}
+      b.style.display="none"
     if (InputTask === "") {
       alert("Add a valid Task")
     }
@@ -138,6 +145,12 @@ function App() {
 
   }
   async function Newitem1(e) {
+    const a = document.querySelectorAll(".Edit")
+    const b = document.querySelector(".closeedit")
+    for (let i = 0; i < a.length; i++) {
+      const e = a[i];
+      e.style.display = "none"}
+      b.style.display="none"
     if (e.key === 'Enter') {
       if (InputTask === "") {
         alert("Add a valid Task")
@@ -197,8 +210,8 @@ function App() {
             {todoslist.map(item => {
               return <div className='flex ml-3 w-[45vw] justify-between' key={item.id}>
                 <div className='flex '>
-                  <input type="checkbox" onChange={() => Checkbox(item.id)} ></input>
-                  <li className={item.isCompleted ? " ml-5 line-through h-[30px]" : "h-[30px] ml-5"}>{item.InputTask}</li>
+                  <input type="checkbox"  className='Mycheckbox' onChange={() => Checkbox(item.id)} checked={!!item.isCompleted} ></input>
+                  <li className={item.isCompleted ? " ml-8 line-through h-[30px] text-black text-xl not-italic" : "h-[30px] ml-8 text-black text-xl not-italic"}>{item.InputTask}</li>
                 </div>
                 <div className='Edit w-[70px] ' style={{display:'none'}}>
                   <button className='cursor-pointer rounded-full w-[30px] h-[30px] flex justify-center items-center  hover:bg-gray-300' onClick={() => Handleedit(item, item.id)}>
